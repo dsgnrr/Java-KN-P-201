@@ -13,7 +13,7 @@ public class FilesDemo {
     public FilesDemo() {
         this.random = new Random();
     }
-
+    // region Homework3
     private void showMax(List<Integer> lineCounts) {
         int max = 0, max_postion = 0;
         int iter = 0;
@@ -56,6 +56,7 @@ public class FilesDemo {
             }
         }
     }
+
     public void run() {
 //        Д.З. Реалізувати алгоритм пошуку найдовшого рядка у файлі
 //                - згенерувати файл з рядками випадкової довжини
@@ -89,6 +90,7 @@ public class FilesDemo {
         this.showMax(lineCounts);
 
     }
+    // endregion
 
     // region зберігання даних у файлах
     public void run3() {
