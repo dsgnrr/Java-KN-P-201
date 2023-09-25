@@ -1,7 +1,7 @@
 package step.learning.oop;
 
 public class Journal extends Literature
-        implements ICopyable, IPeriodic {
+        implements ICopyable, IPeriodic,IPrintable,IMultiple {
     public Journal(String title, int number) {
         this.setNumber(number);
         super.setTitle(title);
@@ -30,5 +30,10 @@ public class Journal extends Literature
     @Override
     public String getPeriod() {
         return "monthly";
+    }
+
+    @Override
+    public int getCount() {
+        return 12;
     }
 }

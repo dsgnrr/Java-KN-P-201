@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Newspaper extends Literature
-implements IPeriodic {
+implements IPeriodic,IPrintable,IMultiple {
     private Date date;
     private static final SimpleDateFormat sqlDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private static final SimpleDateFormat cardDateFormat = new SimpleDateFormat("dd.MM.yyyy");
@@ -39,5 +39,10 @@ implements IPeriodic {
     @Override
     public String getPeriod() {
         return "daily";
+    }
+
+    @Override
+    public int getCount() {
+        return 20;
     }
 }

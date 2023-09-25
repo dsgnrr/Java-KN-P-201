@@ -45,6 +45,50 @@ public class Library {
         }
     }
 
+    public List<Literature> getPrintable() {
+        List<Literature> printableList = new LinkedList<Literature>();
+        for (Literature literature : funds) {
+            if (isPrintable(literature)) {
+                printableList.add(literature);
+            }
+        }
+        return printableList;
+    }
+
+    public List<Literature> getNonPrintable() {
+        List<Literature> printableList = new LinkedList<Literature>();
+        for (Literature literature : funds) {
+            if (!isPrintable(literature)) {
+                printableList.add(literature);
+            }
+        }
+        return printableList;
+    }
+    public List<Literature> getMultiple() {
+        List<Literature> multipleList = new LinkedList<Literature>();
+        for (Literature literature : funds) {
+            if (isMultiple(literature)) {
+                multipleList.add(literature);
+            }
+        }
+        return multipleList;
+    }
+    public List<Literature> getSingle() {
+        List<Literature> multipleList = new LinkedList<Literature>();
+        for (Literature literature : funds) {
+            if (!isMultiple(literature)) {
+                multipleList.add(literature);
+            }
+        }
+        return multipleList;
+    }
+    public boolean isMultiple(Literature literature){
+        return (literature instanceof  IMultiple);
+    }
+    public boolean isPrintable(Literature literature) {
+        return (literature instanceof IPrintable);
+    }
+
     public boolean isCopiable(Literature literature) {
         return (literature instanceof ICopyable);
     }
@@ -59,13 +103,14 @@ public class Library {
             }
         }
     }
+
     public void printPeriodic2() {
         for (Literature literature : funds) {
-            try{
+            try {
                 Method getPeriodMethod = literature.getClass()
                         .getDeclaredMethod("getPeriod");
-                System.out.println(getPeriodMethod.invoke(literature)+" "+literature.getCard());
-            }catch (Exception ignored){
+                System.out.println(getPeriodMethod.invoke(literature) + " " + literature.getCard());
+            } catch (Exception ignored) {
 
             }
         }

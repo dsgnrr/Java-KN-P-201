@@ -18,26 +18,60 @@ public class OopDemo {
 
             library.add(new Journal("Marvel Comics", 117));
 
+            library.add(new Hologram("Hologram", "1920x1080"));
+
         } catch (Exception ex) {
             System.err.println("Literature creation error: " + ex.getMessage());
         }
-        library.printAllCards();
-        ///////////////////////////////////////////
+        ////////////////////////////////////////////////////////////
+        System.out.println("------------- PRINTABLE -------------");
+        int index = 0;
+        for (Literature literature : library.getPrintable()) {
+            index++;
+            System.out.printf("%s. %s%n", index, literature.getCard());
+        }
+        ////////////////////////////////////////////////////////////
+        System.out.println("------------- NON PRINTABLE -------------");
+        index = 0;
+        for (Literature literature : library.getNonPrintable()) {
+            index++;
+            System.out.printf("%s. %s%n", index, literature.getCard());
+        }
+        ////////////////////////////////////////////////////////////
+        System.out.println("------------- MULTIPLE -------------");
+        index = 0;
+        for (Literature literature : library.getMultiple()) {
+            index++;
+            IMultiple multipleLit = (IMultiple) literature;
+            System.out.printf("%s. %s count: %s%n", index, literature.getCard(),multipleLit.getCount());
+        }
+        ////////////////////////////////////////////////////////////
+        System.out.println("------------- SINGLE -------------");
+        index = 0;
+        for (Literature literature : library.getSingle()) {
+            index++;
+            System.out.printf("%s. %s%n", index, literature.getCard());
+        }
+        // region Classwork
+        /* library.printAllCards();
+
         System.out.println("------------- COPYABLE -------------");
         library.printCopyable();
-        ///////////////////////////////////////////
+
         System.out.println("------------- NON COPYABLE -------------");
         library.printNonCopyable();
-        ///////////////////////////////////////////
+
         System.out.println("------------- PERIODIC -------------");
         library.printPeriodic();
-        ///////////////////////////////////////////
+
         System.out.println("------------- NON PERIODIC -------------");
         library.printNonPeriodic();
-        ///////////////////////////////////////////
+
         System.out.println("------------- PERIODIC2 -------------");
         library.printPeriodic2();
-        ///////////////////////////////////////////
+         */
+
+        // endregion
     }
 }
 /*
