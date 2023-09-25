@@ -1,12 +1,43 @@
 package step.learning.oop;
 
+import java.util.Date;
+
 public class OopDemo {
-    public void run(){
-        Book book=new Book("D. Kunth", "Art of programming");
-        System.out.println(book.getCard());
+    public void run() {
         Library library = new Library();
-        library.add(book);
+        try {
+            library.add(new Book("D. Kunth", "Art of programming"));
+
+            library.add(new Newspaper("Daily Mail", "2023-09-25"));
+
+            library.add(new Journal("Science Journal", 5));
+
+            library.add(new Book("Richter", "CLR via C#"));
+
+            library.add(new Newspaper("Washington Post", "1971-01-01"));
+
+            library.add(new Journal("Marvel Comics", 117));
+
+        } catch (Exception ex) {
+            System.err.println("Literature creation error: " + ex.getMessage());
+        }
         library.printAllCards();
+        ///////////////////////////////////////////
+        System.out.println("------------- COPYABLE -------------");
+        library.printCopyable();
+        ///////////////////////////////////////////
+        System.out.println("------------- NON COPYABLE -------------");
+        library.printNonCopyable();
+        ///////////////////////////////////////////
+        System.out.println("------------- PERIODIC -------------");
+        library.printPeriodic();
+        ///////////////////////////////////////////
+        System.out.println("------------- NON PERIODIC -------------");
+        library.printNonPeriodic();
+        ///////////////////////////////////////////
+        System.out.println("------------- PERIODIC2 -------------");
+        library.printPeriodic2();
+        ///////////////////////////////////////////
     }
 }
 /*

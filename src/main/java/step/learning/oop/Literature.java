@@ -11,5 +11,5 @@ public abstract class Literature {
         this.title = title;
     }
 
-    public abstract  String getCard();
+    public abstract String getCard();
 }

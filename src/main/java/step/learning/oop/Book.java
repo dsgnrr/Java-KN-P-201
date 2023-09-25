@@ -1,6 +1,7 @@
 package step.learning.oop;
 
-public class Book extends Literature {
+public class Book extends Literature
+        implements ICopyable{
     private String author;
 
     public Book(String author, String title) {
