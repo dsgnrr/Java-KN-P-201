@@ -1,4 +1,18 @@
 # Java-KN-P-201 Homeworks
+## 25.09 Homewrok
+* Code: <br>
+  + Interfaces <br>
+  ![alt text](https://github.com/dsgnrr/Java-KN-P-201/blob/master/Homework/hw4/interface1.png)
+  ![alt text](https://github.com/dsgnrr/Java-KN-P-201/blob/master/Homework/hw4/interface2.png)
+  + Hologram.java <br>
+  ![alt text](https://github.com/dsgnrr/Java-KN-P-201/blob/master/Homework/hw4/hologram.png)
+  + Selection methods <br>
+  ![alt text](https://github.com/dsgnrr/Java-KN-P-201/blob/master/Homework/hw4/selection_methods.png)
+  ![alt text](https://github.com/dsgnrr/Java-KN-P-201/blob/master/Homework/hw4/filter_functions.png)
+  + Output <br>
+  ![alt text](https://github.com/dsgnrr/Java-KN-P-201/blob/master/Homework/hw4/output.png)
+* Result: <br>
+![alt text](https://github.com/dsgnrr/Java-KN-P-201/blob/master/Homework/hw4/result.png)
 ## 22.09 Homewrok
 * Code: <br>
 ![alt text](https://github.com/dsgnrr/Java-KN-P-201/blob/master/Homework/hw3/code1.png)
