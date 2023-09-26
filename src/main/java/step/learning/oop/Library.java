@@ -1,14 +1,80 @@
 package step.learning.oop;
 
+import com.google.gson.*;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.List;
 import java.lang.reflect.Method;
+import java.util.Objects;
 
 public class Library {
+    public List<Literature> getFunds() {
+        return funds;
+    }
+
     private List<Literature> funds;
 
     public Library() {
         this.funds = new LinkedList<>();
+    }
+
+    public void save() throws IOException {
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+        FileWriter writer = new FileWriter("./src/main/resources/Library.json");
+        writer.write(gson.toJson(this.getFunds()));
+        writer.close();
+    }
+
+    public void load() throws RuntimeException {
+        try (InputStreamReader reader = new InputStreamReader(
+                Objects.requireNonNull(
+                        this.getClass()
+                                .getClassLoader()
+                                .getResourceAsStream("Library.json")
+                )
+        )) {
+            for (JsonElement item : JsonParser.parseReader(reader).getAsJsonArray()) {
+                this.funds.add(
+
+                        this.fromJson(item.getAsJsonObject())
+                );
+            }
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        } catch (NullPointerException ignored) {
+            throw new RuntimeException("Resource not found");
+        }
+    }
+
+    private Literature fromJson(JsonObject jsonObject) throws ParseException {
+        Class<?>[] literatures = {Book.class, Journal.class, Newspaper.class, Hologram.class};
+        try {
+            for (Class<?> literature : literatures) {
+                Method isParseableFromJson = literature.getDeclaredMethod("isParseableFromJson", JsonObject.class);
+                isParseableFromJson.setAccessible(true);
+                if ((boolean) isParseableFromJson.invoke(null, jsonObject)) {
+                    Method fromJson = literature.getDeclaredMethod("fromJson", JsonObject.class);
+                    fromJson.setAccessible(true);
+                    return (Literature) fromJson.invoke(null, jsonObject);
+                }
+            }
+        } catch (Exception ex) {
+            throw new ParseException("Reflection error: "+ ex.getMessage(),0);
+        }
+        /*if (Book.isParseableFromJson(jsonObject)) {
+            return Book.fromJson(jsonObject);
+        } else if (Journal.isParseableFromJson(jsonObject)) {
+            return Journal.fromJson(jsonObject);
+        } else if (Newspaper.isParseableFromJson(jsonObject)) {
+            return Newspaper.fromJson(jsonObject);
+        } else if (Hologram.isParseableFromJson(jsonObject)) {
+            return Hologram.fromJson(jsonObject);
+        }*/
+        throw new ParseException("Literature type unrecognized", 0);
     }
 
     public void add(Literature literature) {
@@ -64,6 +130,7 @@ public class Library {
         }
         return printableList;
     }
+
     public List<Literature> getMultiple() {
         List<Literature> multipleList = new LinkedList<Literature>();
         for (Literature literature : funds) {
@@ -73,6 +140,7 @@ public class Library {
         }
         return multipleList;
     }
+
     public List<Literature> getSingle() {
         List<Literature> multipleList = new LinkedList<Literature>();
         for (Literature literature : funds) {
@@ -82,9 +150,11 @@ public class Library {
         }
         return multipleList;
     }
-    public boolean isMultiple(Literature literature){
-        return (literature instanceof  IMultiple);
+
+    public boolean isMultiple(Literature literature) {
+        return (literature instanceof IMultiple);
     }
+
     public boolean isPrintable(Literature literature) {
         return (literature instanceof IPrintable);
     }

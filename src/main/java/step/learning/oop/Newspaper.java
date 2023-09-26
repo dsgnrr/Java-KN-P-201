@@ -1,11 +1,13 @@
 package step.learning.oop;
 
+import com.google.gson.JsonObject;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Newspaper extends Literature
-implements IPeriodic,IPrintable,IMultiple {
+        implements IPeriodic, IPrintable, IMultiple {
     private Date date;
     private static final SimpleDateFormat sqlDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private static final SimpleDateFormat cardDateFormat = new SimpleDateFormat("dd.MM.yyyy");
@@ -27,12 +29,35 @@ implements IPeriodic,IPrintable,IMultiple {
         this.date = date;
     }
 
+    public static boolean isParseableFromJson(JsonObject jsonObject) {
+        String[] requiredFields = {"title", "date"};
+        for (String field : requiredFields) {
+            if (!jsonObject.has(field)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     @Override
     public String getCard() {
         return String.format(
                 "newspaper '%s' from %s",
                 super.getTitle(),
                 cardDateFormat.format(this.getDate())
+        );
+    }
+
+    public static Newspaper fromJson(JsonObject jsonObject) throws ParseException {
+        String[] requiredFields = {"title", "date"};
+        for (String field : requiredFields) {
+            if (!jsonObject.has(field)) {
+                throw new ParseException("Missing required field: " + field, 0);
+            }
+        }
+        return new Newspaper(
+                jsonObject.get(requiredFields[0]).getAsString(),
+                jsonObject.get(requiredFields[1]).getAsString()
         );
     }
 
