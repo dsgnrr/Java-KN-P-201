@@ -1,4 +1,9 @@
 # Java-KN-P-201 Homeworks
+## 26.09 Homewrok
+* Code <br>
+  ![alt text](https://github.com/dsgnrr/Java-KN-P-201/blob/master/Homework/hw5/parseHolo.png)
+* Result <br>
+  ![alt text](https://github.com/dsgnrr/Java-KN-P-201/blob/master/Homework/hw5/result.png)
 ## 25.09 Homewrok
 * Code: <br>
   + Interfaces <br>
