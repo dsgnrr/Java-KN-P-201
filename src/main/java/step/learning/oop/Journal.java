@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 
 import java.text.ParseException;
 
+@Serializable
 public class Journal extends Literature
         implements ICopyable, IPeriodic, IPrintable, IMultiple {
     public Journal(String title, int number) {
@@ -21,6 +22,7 @@ public class Journal extends Literature
 
     private int number;
 
+    @ParseChecker
     public static boolean isParseableFromJson(JsonObject jsonObject) {
         String[] requiredFields = {"title", "number"};
         for (String field : requiredFields) {
@@ -31,6 +33,7 @@ public class Journal extends Literature
         return true;
     }
 
+    @FromJsonParser
     public static Journal fromJson(JsonObject jsonObject) throws ParseException {
         String[] requiredFields = {"title", "number"};
         for (String field : requiredFields) {

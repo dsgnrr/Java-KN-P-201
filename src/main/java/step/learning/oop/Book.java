@@ -2,12 +2,15 @@ package step.learning.oop;
 
 import com.google.gson.JsonObject;
 
+
 import java.text.ParseException;
 
+@Serializable
 public class Book extends Literature
         implements ICopyable, IPrintable {
     private String author;
 
+    @ParseChecker
     public static boolean isParseableFromJson(JsonObject jsonObject) {
         String[] requiredFields = {"title", "author"};
         for (String field : requiredFields) {
@@ -18,6 +21,7 @@ public class Book extends Literature
         return true;
     }
 
+    @FromJsonParser
     public static Book fromJson(JsonObject jsonObject) throws ParseException {
         String[] requiredFields = {"title", "author"};
         for (String field : requiredFields) {
@@ -52,6 +56,8 @@ public class Book extends Literature
                 super.getTitle()
         );
     }
+
+
 }
 /*          this.getTitle, якщо є
 getTitle() <

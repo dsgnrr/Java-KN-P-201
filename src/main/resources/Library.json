@@ -1,1 +1,18 @@
-[{"author":"D. Kunth","title":"Art of programming"},{"date":"2023-09-25","title":"Daily Mail"},{"number":5,"title":"Science Journal"},{"author":"Richter","title":"CLR via C#"},{"date":"1971-01-01","title":"Washington Post"},{"number":117,"title":"Marvel Comics"},{"size":"1920x1080","title":"Hologram"}]
+[
+  {
+    "author": "D. Kunth",
+    "title": "Art of programming"
+  },
+  {
+    "number": 5,
+    "title": "Science Journal"
+  },
+  {
+    "author": "Richter",
+    "title": "CLR via C#"
+  },
+  {
+    "number": 117,
+    "title": "Marvel Comics"
+  }
+]
