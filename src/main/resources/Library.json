@@ -4,6 +4,10 @@
     "title": "Art of programming"
   },
   {
+    "date": "2023-09-25",
+    "title": "Daily Mail"
+  },
+  {
     "number": 5,
     "title": "Science Journal"
   },
@@ -12,7 +16,15 @@
     "title": "CLR via C#"
   },
   {
+    "date": "1971-01-01",
+    "title": "Washington Post"
+  },
+  {
     "number": 117,
     "title": "Marvel Comics"
+  },
+  {
+    "size": "1920x1080",
+    "title": "Hologram"
   }
 ]
