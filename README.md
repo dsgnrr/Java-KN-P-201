@@ -1,4 +1,10 @@
 # Java-KN-P-201 Homeworks
+## 27.09 Homewrok
+* Code <br>
+  ![alt text](https://github.com/dsgnrr/Java-KN-P-201/blob/master/Homework/hw6/holo.png)
+  ![alt text](https://github.com/dsgnrr/Java-KN-P-201/blob/master/Homework/hw6/newspaper.png)
+* Result <br>
+  ![alt text](https://github.com/dsgnrr/Java-KN-P-201/blob/master/Homework/hw6/result.png)
 ## 26.09 Homewrok
 * Code <br>
   ![alt text](https://github.com/dsgnrr/Java-KN-P-201/blob/master/Homework/hw5/parseHolo.png)
