@@ -1,6 +1,7 @@
 package step.learning.oop;
 
 public abstract class Literature {
+    @Required
     private String title;
 
     public String getTitle() {
