@@ -1,4 +1,11 @@
 # Java-KN-P-201 Homeworks
+## 29.09 Homewrok
+* Code <br>
+* 
+  ![alt text](https://github.com/dsgnrr/Java-KN-P-201/blob/master/Homework/hw7/sha256.png)
+  ![alt text](https://github.com/dsgnrr/Java-KN-P-201/blob/master/Homework/hw7/config.png)
+* Result <br>
+  ![alt text](https://github.com/dsgnrr/Java-KN-P-201/blob/master/Homework/hw7/result.png)
 ## 27.09 Homewrok
 * Code <br>
   ![alt text](https://github.com/dsgnrr/Java-KN-P-201/blob/master/Homework/hw6/holo.png)
