@@ -7,35 +7,79 @@ public class AsyncDemo {
     }
 
     private void multiThreadDemo() {
-        Thread thread = new Thread( // об'єкт Thread відповідає за системний ресурс - потік
-                new Runnable() { // Сильна ООП не дозволяє передавати лише метод, а
-                    @Override           // потребує функціональний інтерфейс - інтерфейс з одним методом
-                    public void run() { // Java дозволяє імплементувати інтерфейси у точці виклику
-                        try {
-                            System.out.println("Thread starts");
-                            Thread.sleep(2000);
-                            System.out.println("Thread finishes");
-                        } catch (InterruptedException ex) {
-                            System.err.println("Sleeping broken" + ex.getMessage());
-                        }
-                    }
-                }); // Створення об'єкту НЕ запускає його активність
+        // region Class work
+//        Thread thread = new Thread( // об'єкт Thread відповідає за системний ресурс - потік
+//                new Runnable() { // Сильна ООП не дозволяє передавати лише метод, а
+//                    @Override           // потребує функціональний інтерфейс - інтерфейс з одним методом
+//                    public void run() { // Java дозволяє імплементувати інтерфейси у точці виклику
+//                        try {
+//                            System.out.println("Thread starts");
+//                            Thread.sleep(2000);
+//                            System.out.println("Thread finishes");
+//                        } catch (InterruptedException ex) {
+//                            System.err.println("Sleeping broken" + ex.getMessage());
+//                        }
+//                    }
+//                }); // Створення об'єкту НЕ запускає його активність
         // Запуск можливий у двох режимах: синхронному (run) та асинхронному (start)
-        thread.start();
+        //thread.start();
         // якщо завершення не очікувати, то продовжується виконання даної активності
         // якщо потрібне очікування, то виконується метод join
+//        try {
+//            thread.join();
+//        } catch (InterruptedException ex) {
+//            System.out.println("Thread joining interruped: " + ex.getMessage());
+//        }
+//        // Від Java-8 з'являється конструкція "лямбда", яка є сумісною з функціональними інтрфейсами
+//        new Thread(() -> {
+//            System.out.println("Thread 2 starts");
+//        }).start();
+//        // а також перетворювати тип, зазначаючи метод від іншого об'єкту
+//        new Thread(this::methodForThread).start();
+//        System.out.println("multiThreadDemo() finishes");
+        // endregion
+//        За допомогою багатопоточності реалізувати наступну схему виконання :
+//        ----------------1------------- ---final---
+//                ------2------ --------3-------
+//                1 start
+//        2 start
+//        2 finish
+//        3 start
+//        3 finish
+//        final
+//        1 finish
+        Thread thread1 = new Thread(() -> {
+            System.out.println("1 start");
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                System.out.println("thread.sleep: " + e.getMessage());
+            }
+            System.out.println("1 finish");
+        });
+        Thread thread2 = new Thread(() -> {
+            System.out.println("2 start");
+            System.out.println("2 finish");
+        });
+        Thread thread3 = new Thread(() -> {
+            System.out.println("3 start");
+            System.out.println("3 finish");
+        });
+        thread1.start();
+        thread2.start();
+
         try {
-            thread.join();
-        } catch (InterruptedException ex) {
-            System.out.println("Thread joining interruped: " + ex.getMessage());
+            thread2.join();
+        } catch (InterruptedException e) {
+            System.out.println("thread.join: " + e.getMessage());
         }
-        // Від Java-8 з'являється конструкція "лямбда", яка є сумісною з функціональними інтрфейсами
-        new Thread(() -> {
-            System.out.println("Thread 2 starts");
-        }).start();
-        // а також перетворювати тип, зазначаючи метод від іншого об'єкту
-        new Thread(this::methodForThread).start();
-        System.out.println("multiThreadDemo() finishes");
+        thread3.start();
+        try {
+            thread3.join();
+        } catch (InterruptedException e) {
+            System.out.println("thread.join: " + e.getMessage());
+        }
+        System.out.println("final");
     }
 
     private void methodForThread() {
