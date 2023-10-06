@@ -3,23 +3,44 @@ package step.learning.async;
 import java.util.Locale;
 
 public class AsyncDemo {
+    //region Classwork
     private double sum;
-    private int activeThreadsCount; // кількість потоків, які ще не завершилися
     private final Object sumLocker = new Object();
+    //private int activeThreadsCount; // кількість потоків, які ще не завершилися
+    //endregion
+    private int activeThreadsCount; // кількість потоків, які ще не завершилися
+
     private final Object atcLocker = new Object();
+    private final Object codeLocker = new Object();
 
     public void run() {
         System.out.println("Async demo");
         //multiThreadDemo();
-        int months = 12;
+
         sum = 100.0;
-        activeThreadsCount = months;
-        Thread[] threads = new Thread[months];
-        for (int i = 0; i < months; i++) {
-            threads[i] = new Thread(new MonthRate(i + 1));
+        int numbers = 10;
+        activeThreadsCount = numbers;
+        Thread[] threads = new Thread[numbers];
+        for (int i = 0; i < numbers; i++) {
+            threads[i] = new Thread(new CodeBuilder());
             threads[i].start();
-//            threads[i].join(); // синхронне виконання
         }
+        for (int i = 0; i < numbers; i++) {
+            try {
+                threads[i].join();
+            } catch (InterruptedException ignored) {
+            }
+        }
+        System.out.println("Total code: " + code);
+        //region ClassWork
+//        int months = 12;
+//        activeThreadsCount = months;
+//        Thread[] threads = new Thread[months];
+//        for (int i = 0; i < months; i++) {
+//            threads[i] = new Thread(new MonthRate(i + 1));
+//            threads[i].start();
+////            threads[i].join(); // синхронне виконання
+//        }
         // визначення підсумку робти всіх потоків. Варіант 1) - чекаємо всі
         /*
         try {
@@ -34,9 +55,30 @@ public class AsyncDemo {
          */
         // визначення підсумку робти всіх потоків. Варіант 2) - кожен потік перевіряє
         // чи він є останній
+        //endregion
     }
 
+    private String code = "";
 
+    class CodeBuilder implements Runnable {
+
+        @Override
+        public void run() {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ignored) {
+            }
+            synchronized (atcLocker) {
+                activeThreadsCount--;
+            }
+            synchronized (codeLocker) {
+                code += activeThreadsCount;
+            }
+        }
+
+    }
+
+    //region ClassWork
     class MonthRate // Nested class - class inside class
             implements Runnable {
         private final int month;
@@ -44,6 +86,7 @@ public class AsyncDemo {
         public MonthRate(int month) {
             this.month = month;
         }
+
 
         @Override
         public void run() {
@@ -77,8 +120,10 @@ public class AsyncDemo {
             }
         }
 
+
     }
 
+    //endregion
     private void multiThreadDemo() {
         // region Class work
 //        Thread thread = new Thread( // об'єкт Thread відповідає за системний ресурс - потік
