@@ -1,4 +1,10 @@
 # Java-KN-P-201 Homeworks
+## 04.10 Homework
+* Code <br>
+  ![alt text](https://github.com/dsgnrr/Java-KN-P-201/blob/master/Homework/hw10/code1.png)
+  ![alt text](https://github.com/dsgnrr/Java-KN-P-201/blob/master/Homework/hw10/code2.png)
+* Result <br>
+  ![alt text](https://github.com/dsgnrr/Java-KN-P-201/blob/master/Homework/hw10/result.png)
 ## 03.10 Homework
 * Code <br>
   ![alt text](https://github.com/dsgnrr/Java-KN-P-201/blob/master/Homework/hw9/code1.png)

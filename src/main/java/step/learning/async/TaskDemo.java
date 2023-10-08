@@ -1,5 +1,6 @@
 package step.learning.async;
 
+import java.util.Locale;
 import java.util.concurrent.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -8,56 +9,87 @@ import java.util.function.Supplier;
 public class TaskDemo {
     private final ExecutorService threadPool = Executors.newSingleThreadExecutor();//newFixedThreadPool(3);
 
-    public void run() {
-        long t1 = System.nanoTime();
-        Future<String> task1 = threadPool.submit(new Callable<String>() {
-            @Override
-            public String call() throws Exception {
-                System.out.println("Task 1 start");
-                Thread.sleep(1000);
-                return "Task 1 finish";
+
+    private double sum;
+    private final Object sumLocker = new Object();
+    private final ExecutorService threadPool2 = Executors.newFixedThreadPool(6);
+
+    private Future<?> mounthRate(int month) {
+        double p = 0.1;
+        return threadPool2.submit(() -> {
+            double localsum;
+            synchronized (sumLocker) {
+                localsum = sum *= (1.0 + p);
             }
+
+            System.out.printf(Locale.US,
+                    "month: %02d, percent: %.2f, sum: %.2f%n", month, p, localsum);
         });
-        for (int i = 0; i < 10; i++) {
-            printNumber(10 + i);
-        }
+    }
 
-        Future<String> supplyTask = CompletableFuture
-                .supplyAsync(supplier,threadPool)
-                .thenApply(continuation)
-                .thenApply(continuation2);
-        Future<?> task2 = CompletableFuture
-                .supplyAsync(supplier2)
-                .thenApply(continuation2)
-                .thenAccept(acceptor);
-        /*
-        -------1---====2===:::3:::: -- task chaining ("нитки" коду)
-        **4***~~~~~~5~~~~~~###6####
-         */
-
-
-
-//        printNumber(18);
-
-        try {
-            String res = task1.get();
-            System.out.println(res);
-            System.out.println(supplyTask.get());
-        } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException(e);
+    public void run() {
+        sum = 100.00;
+        for (int i = 0; i < 12; i++) {
+            mounthRate(i + 1);
         }
 
         try {
-            threadPool.shutdown();
-            threadPool.awaitTermination(50000, TimeUnit.MILLISECONDS);
-            threadPool.shutdownNow();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            threadPool2.shutdown();
+            threadPool2.awaitTermination(50000, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException ignored) {
         }
-        long t2 = System.nanoTime();
-
-
-        System.out.println("Main finish " + (t2 - t1) / 1e9);
+        System.out.printf(Locale.US, "Total sum: %.2f%n", sum);
+        //region ClassWork
+//        long t1 = System.nanoTime();
+//        Future<String> task1 = threadPool.submit(new Callable<String>() {
+//            @Override
+//            public String call() throws Exception {
+//                System.out.println("Task 1 start");
+//                Thread.sleep(1000);
+//                return "Task 1 finish";
+//            }
+//        });
+//        for (int i = 0; i < 10; i++) {
+//            printNumber(10 + i);
+//        }
+//
+//        Future<String> supplyTask = CompletableFuture
+//                .supplyAsync(supplier,threadPool)
+//                .thenApply(continuation)
+//                .thenApply(continuation2);
+//        Future<?> task2 = CompletableFuture
+//                .supplyAsync(supplier2)
+//                .thenApply(continuation2)
+//                .thenAccept(acceptor);
+//        /*
+//        -------1---====2===:::3:::: -- task chaining ("нитки" коду)
+//        **4***~~~~~~5~~~~~~###6####
+//         */
+//
+//
+//
+////        printNumber(18);
+//
+//        try {
+//            String res = task1.get();
+//            System.out.println(res);
+//            System.out.println(supplyTask.get());
+//        } catch (InterruptedException | ExecutionException e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//        try {
+//            threadPool.shutdown();
+//            threadPool.awaitTermination(50000, TimeUnit.MILLISECONDS);
+//            threadPool.shutdownNow();
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+//        long t2 = System.nanoTime();
+//
+//
+//        System.out.println("Main finish " + (t2 - t1) / 1e9);
+        //endregion
     }
 
     private final Supplier<String> supplier = () -> {
@@ -93,6 +125,7 @@ public class TaskDemo {
             System.out.println(s + " accepted");
         }
     };
+
     private Future<?> printNumber(int num) {
         return threadPool.submit(
                 () -> {
